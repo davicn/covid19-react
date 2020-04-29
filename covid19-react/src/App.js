@@ -1,26 +1,51 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import api from './api'
+import { CardInfo } from './components/index'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Davi <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+class App extends React.Component {
+
+  state = {
+    globalData: []
+  }
+
+  componentDidMount() { this.getGlobalStats() }
+
+  getGlobalStats = async () => {
+    await api.get('free-api?global=stats')
+      .then((response) => {
+        const globalData = response.data.results.map(item => ({
+          active_cases: item.total_active_cases,
+          affected_countries: item.total_affected_countries,
+          cases: item.total_cases,
+          deaths: item.total_deaths,
+          new_deaths_today: item.total_new_deaths_today,
+          recovered: item.total_recovered,
+          serious_cases: item.total_serious_cases,
+          unresolved: item.total_unresolved,
+          source: item.source.url
+        }))
+        this.setState({ globalData: globalData[0] })
+        console.log(globalData[0])
+      }).catch((error) => {
+        console.log("ERRO", error)
+      })
+  }
+
+
+
+  render() {
+    const { globalData } = this.state
+
+    return (
+      <div>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+         <CardInfo titulo='Total de Casos' content={globalData.cases}/>
+        </div>
+      </div>
+    )
+  }
 }
 
 export default App;
