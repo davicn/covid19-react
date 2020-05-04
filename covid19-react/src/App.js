@@ -40,12 +40,13 @@ class App extends React.Component {
 
     return (
       <div>
-        <NavApp/>
+        <NavApp />
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
           <CardInfo titulo='Total de Casos' content={globalData.cases} />
           <CardInfo titulo='Mortes' content={globalData.deaths} />
           <CardInfo titulo='Recuperados' content={globalData.recovered} />
         </div>
+        {/* <DrawerApp/> */}
       </div>
     )
   }
