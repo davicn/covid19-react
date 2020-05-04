@@ -1,6 +1,6 @@
 import React from 'react';
 import api from './api'
-import { CardInfo } from './components/index'
+import { CardInfo, NavApp } from './components/index'
 
 
 
@@ -40,8 +40,11 @@ class App extends React.Component {
 
     return (
       <div>
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
-         <CardInfo titulo='Total de Casos' content={globalData.cases}/>
+        <NavApp/>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+          <CardInfo titulo='Total de Casos' content={globalData.cases} />
+          <CardInfo titulo='Mortes' content={globalData.deaths} />
+          <CardInfo titulo='Recuperados' content={globalData.recovered} />
         </div>
       </div>
     )
